@@ -9,8 +9,8 @@ repository = "https://github.com/vunkpunk/vunkpunk-backend"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-django = "^5.1.1"
-
+django = "^5.1.2"
+djangorestframework="^3.15.2"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.10.1"
@@ -18,7 +18,8 @@ black = "^24.4.2"
 isort = "^5.13.2"
 ruff = "^0.5.2"
 pyyaml = "^6.0.1"
-
+django-stubs="^5.1.0"
+djangorestframework-stubs="^3.15.1"
 
 [tool.black]
 line-length = 120
@@ -28,6 +29,7 @@ target-version = "py312"
 line-length = 120
 indent-width = 4
 respect-gitignore = true
+exclude = ["migrations"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -36,10 +38,9 @@ docstring-code-format = true
 skip-magic-trailing-comma = false
 line-ending = "auto"
 
-
 [tool.ruff.lint]
-select = ["A", "E", "F", "I", "PL", "RUF", "SIM", "UP", "W"]
-ignore = ["PLR0913"]
+select = ["A", "E", "F", "PL", "RUF", "SIM", "UP", "W"]
+ignore = ["PLR0913", "RUF001", "F401"]
 
 [build-system]
 requires = ["poetry-core"]
