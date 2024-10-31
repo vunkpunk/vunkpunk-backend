@@ -1,7 +1,6 @@
 from rest_framework import generics, status, viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-
 from vp_forum.models import SaleCard
 from vp_forum.serializers import SaleCardSerializer
 from vp_users.permissions import IsAuthor

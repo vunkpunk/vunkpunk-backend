@@ -15,11 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+import vp_forum
 from django.contrib import admin
 from django.urls import include, path, re_path
 from rest_framework import routers
-
-import vp_forum
 from vp_forum.views import SaleCardViewSet
 from vp_users.views import UserViewSet
 
