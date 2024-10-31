@@ -15,11 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+import vp_forum
 from django.contrib import admin
-from django.urls import path
-from vp_forum.views import SaleCardApiView
+from django.urls import include, path, re_path
+from rest_framework import routers
+from vp_forum.views import SaleCardViewSet
+from vp_users.views import UserViewSet
+
+router_forum = routers.SimpleRouter()
+router_forum.register(r"sales", SaleCardViewSet)
+
+router_users = routers.SimpleRouter()
+router_users.register(r"users", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("sales/", SaleCardApiView.as_view()),
+    path("api/", include(router_forum.urls)),
+    path("api/", include(router_users.urls)),
+    path(r"api/auth/", include("djoser.urls")),
+    re_path(r"^auth/", include("djoser.urls.authtoken")),
 ]

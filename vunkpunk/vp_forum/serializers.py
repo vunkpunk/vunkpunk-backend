@@ -6,3 +6,4 @@ class SaleCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = SaleCard
         fields = "__all__"
+        read_only_fields = ("rating", "user")
