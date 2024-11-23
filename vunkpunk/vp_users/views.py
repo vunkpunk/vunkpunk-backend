@@ -10,5 +10,5 @@ class UserRetrieveDestroyView(generics.RetrieveDestroyAPIView):
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
-            return (permissions.IsAuthenticated(), )
-        return (permissions.IsAdminUser(), )
+            return (permissions.IsAuthenticated(),)
+        return (permissions.IsAdminUser(),)
