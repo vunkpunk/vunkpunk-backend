@@ -142,3 +142,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ),
 }
+
+DJOSER = {
+    "PERMISSIONS": {
+        "user_list": ["rest_framework.permissions.IsAdminUser"],
+    }
+}
