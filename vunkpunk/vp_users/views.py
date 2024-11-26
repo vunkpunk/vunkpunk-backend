@@ -4,7 +4,7 @@ from vp_users.models import User
 from vp_users.serializers import UserSerializer
 
 
-class UserRetrieveDestroyView(generics.RetrieveDestroyAPIView):
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

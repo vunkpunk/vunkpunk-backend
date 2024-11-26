@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "djoser",
     "vp_forum.apps.VpForumConfig",
     "vp_users.apps.VpUsersConfig",
+    "images_manager.apps.ImagesManagerConfig",
 ]
 
 MIDDLEWARE = [
