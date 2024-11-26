@@ -1,6 +1,5 @@
 from django.urls import reverse
 from rest_framework import serializers
-
 from vp_users.models import User
 
 
