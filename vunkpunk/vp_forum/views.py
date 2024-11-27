@@ -6,7 +6,6 @@ from vp_users.permissions import IsAuthenticatedOrReadOnly, IsAuthor
 
 
 class SaleCardsListCreateView(generics.ListCreateAPIView):
-    # queryset = SaleCard.objects.all()
     serializer_class = SaleCardSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 

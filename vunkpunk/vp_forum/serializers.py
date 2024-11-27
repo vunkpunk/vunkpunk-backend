@@ -4,6 +4,8 @@ from vp_forum.models import SaleCard
 
 
 class SaleCardSerializer(serializers.ModelSerializer):
+    comments_link = serializers.SerializerMethodField("get_comments_link")
+
     class Meta:
         model = SaleCard
         fields = "__all__"
@@ -21,3 +23,7 @@ class SaleCardSerializer(serializers.ModelSerializer):
             representation["photo"] = None
 
         return representation
+
+    def get_comments_link(self, instance):
+        request = self.context.get("request")
+        return request.build_absolute_uri(reverse("comments_list", args=(instance.pk,)))
