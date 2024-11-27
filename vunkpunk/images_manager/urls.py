@@ -1,4 +1,5 @@
 from django.urls import path
+
 from images_manager.views import image_profile, image_salecard
 
 urlpatterns = [
