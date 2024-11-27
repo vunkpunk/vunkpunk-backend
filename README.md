@@ -31,8 +31,15 @@ New user created, now
 3. **api/user/<int: user_id>**
    1. **GET** - print user info (**permissions**: Authenticated)
    2. **PUT, PATCH, DELETE** - recreate, updates, deletes user account (**permissions**: Post Author or Admin)
-4. **admin/**
-   Django regular admin panel
+4. **api/image/salecard/<int: post_id>**
+   1. **GET** - shows picture, attached to salecard (**permissions**: Everyone)
+5. **api/image/user/<int: user_id>**
+   1. **GET** - shows picture, attached to user profile (**permissions**: Everyone)
+6. **api/comments/<int: post_id>**
+   1. **GET** - shows all comments of salecard (**permissions**: Authenticated)
+   2. **POST** - creates a new comment (**fields**: **content**) (**permissions**: Authenticated)
+7. **admin/**
+   1. Django regular admin panel
  
 ## Development 
 
