@@ -4,9 +4,20 @@ from vp_users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    user_salecards_link = serializers.SerializerMethodField("get_user_salecards_link")
+
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "dormitory", "faculty", "description", "photo")
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "dormitory",
+            "faculty",
+            "description",
+            "photo",
+            "user_salecards_link",
+        )
         read_only_fields = ("username",)
 
     def to_representation(self, instance):
@@ -26,3 +37,8 @@ class UserSerializer(serializers.ModelSerializer):
             representation["photo"] = None
 
         return representation
+
+    def get_user_salecards_link(self, instance):
+        request = self.context.get("request")
+        url = reverse("salecards_list")
+        return request.build_absolute_uri(f"{url}?user_id={instance.pk}")
