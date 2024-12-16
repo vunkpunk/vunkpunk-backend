@@ -148,5 +148,20 @@ REST_FRAMEWORK = {
 DJOSER = {
     "PERMISSIONS": {
         "user_list": ["rest_framework.permissions.IsAdminUser"],
-    }
+    },
+    "SERIALIZERS": {
+        "user_create": "vp_users.serializers.RegistrationSerializer",
+    },
 }
+
+
+# if you want to use real smtp, replace 'console' with 'smtp'...
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# ...and undoc vars under this row (dont forget about .env)
+
+# DEFAULT_FROM_EMAIL = 'no-reply@vunkpunk.ru'
+# EMAIL_HOST = os.getenv("EMAIL_HOST")
+# EMAIL_PORT = os.getenv("EMAIL_PORT")
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")

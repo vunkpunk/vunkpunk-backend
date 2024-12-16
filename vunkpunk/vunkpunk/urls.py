@@ -21,7 +21,7 @@ from django.urls import include, path, re_path
 from rest_framework import routers
 from vp_comments.views import CommentsListView
 from vp_forum import views
-from vp_users.views import UserRetrieveUpdateDestroyView
+from vp_users.views import ActivateAccountView, UserRetrieveUpdateDestroyView
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
@@ -32,4 +32,5 @@ urlpatterns = [
     path(r"api/image/", include("images_manager.urls")),
     path(r"api/auth/", include("djoser.urls")),
     re_path(r"api/auth/", include("djoser.urls.authtoken")),
+    path(r"api/auth/activate/", ActivateAccountView.as_view(), name="activate"),
 ]

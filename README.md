@@ -13,10 +13,14 @@ Authentication works by passing a special **Token** in the header of every HTTP-
 Authentication: "Token <paste user auth-token>"
 ```
 To get this token user should be registered, and then get it by requesting. Here is the pipeline of registering:
-1. **api/auth/users/** 
-   **POST**-request, containing **email**, **username**, **password** (all mistakes in fields would be printed back)
-New user created, now
-2. **api/auth/token/login/**
+1. **api/auth/users/** \
+   **POST**-request, containing **email**, **username**, **password** (all mistakes in fields would be printed back) \
+2. New user created, but email activation is needed, so look into console if mock activation(by default) or open mailbox and copy the **activation code**.
+3. **api/auth/activate/** \
+   **POST**-request, containing "email" and "activation_code" fields(str and int). \
+!**ATTENTION**! codes expire after 5 minutes, you can send new ones by **POST**-request with "email" and <"resend": true> fields. \
+(IF YOU FEEL TOO LAZY, THEN JUST EDIT USER FIELD is_active IN DB)
+4. **api/auth/token/login/** \
    **POST**-request, containing **username** and **password**, answer will contain "auth-token", that you should paste into requests headers.
 
 #### 2. Routes
@@ -51,7 +55,15 @@ poetry install --with dev
 2. Create file «.env» in vunkpunk/vunkpunk, then paste this variable in it:
 ```bash
 SECRET_KEY="secret key(ask our dev team)"
+``` 
+**(EXTRA)** if you try working with real smtp, then add this
+```bash
+EMAIL_HOST = "smtp host (I suggest using mailtrap to mock smtp)"
+EMAIL_PORT = <integer>
+EMAIL_HOST_USER = "smtp username"
+EMAIL_HOST_PASSWORD = "yeah, you guessed it, smtp user password"
 ```
+**(EXTRA ENDED)**
 
 3. Execute migrations
 ```bash
