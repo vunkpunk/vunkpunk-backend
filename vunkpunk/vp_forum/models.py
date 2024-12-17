@@ -13,10 +13,10 @@ class SaleCard(models.Model):
     published = PublishedManager()
 
     title: models.CharField = models.CharField(max_length=100, db_index=True)
-    photo: models.ImageField = models.ImageField(
-        upload_to="images_manager/image_folder/salecard/",
-        default="images_manager/image_folder/default/salecard_default.jpg",
-    )
+    # photo: models.ImageField = models.ImageField(
+    #     upload_to="images_manager/image_folder/salecard/",
+    #     default="images_manager/image_folder/default/salecard_default.jpg",
+    # )
     price: models.CharField = models.CharField(max_length=100)
     description: models.CharField = models.CharField(max_length=500, null=True, blank=True)
     contact: models.CharField = models.CharField(max_length=100, null=True, default="Не указано")
