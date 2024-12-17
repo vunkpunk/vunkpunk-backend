@@ -28,15 +28,16 @@ To get this token user should be registered, and then get it by requesting. Here
 (These are routes from server url)
 1. **api/sales/**
    1. **GET** - prints all posts (**permissions**: Everyone)
-   2. **POST** - creates new post (**fields**: **title**, **price**, **description**) (**permissions**: Authenticated)
+   2. **POST** - creates new post (**fields**: **title**, **price**, **description**, **is_published**) (**permissions**: Authenticated)
 2. **api/sales/<int: post_id>**
    1. **GET** - print single post (**permissions**: Authenticated)
-   2. **PUT, PATCH, DELETE** - recreate, updates, deletes single post (**permissions**: Post Author or Admin)
+   2. **PUT, PATCH, DELETE** - recreate, updates, deletes single post (**permissions**: Post Author or Admin) \
+      (!ATTENTION!) to delete picture from post send request with "images_to_delete": [1, 2, 3, ...] (integers, id of pictures you need to delete) 
 3. **api/user/<int: user_id>**
    1. **GET** - print user info (**permissions**: Authenticated)
    2. **PUT, PATCH, DELETE** - recreate, updates, deletes user account (**permissions**: Post Author or Admin)
-4. **api/image/salecard/<int: post_id>**
-   1. **GET** - shows picture, attached to salecard (**permissions**: Everyone)
+4. **api/image/salecard/<int: salecard_photo_id>**
+   1. **GET** - shows picture, attached to some salecard, with id = **salecard_photo_id** (**permissions**: Everyone)
 5. **api/image/user/<int: user_id>**
    1. **GET** - shows picture, attached to user profile (**permissions**: Everyone)
 6. **api/comments/<int: post_id>**
