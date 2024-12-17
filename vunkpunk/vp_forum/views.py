@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
-from vp_forum.models import SaleCard
-from vp_forum.serializers import SaleCardSerializer
+from vp_forum.models import Category, SaleCard
+from vp_forum.serializers import CategorySerializer, SaleCardSerializer
 from vp_users.permissions import IsAuthenticatedOrReadOnly, IsAuthor
 
 
@@ -27,3 +27,9 @@ class SaleCardRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = SaleCard.objects.all()
     serializer_class = SaleCardSerializer
     permission_classes = (IsAdminUser | IsAuthor,)
+
+
+class CategoryView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)

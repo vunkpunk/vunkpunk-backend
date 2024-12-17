@@ -43,7 +43,9 @@ To get this token user should be registered, and then get it by requesting. Here
 6. **api/comments/<int: post_id>**
    1. **GET** - shows all comments of salecard (**permissions**: Authenticated)
    2. **POST** - creates a new comment (**fields**: **content**) (**permissions**: Authenticated)
-7. **admin/**
+7. **api/categories/**
+   1. **GET** - shows all categories (**permissions**: Authenticated)
+8. **admin/**
    1. Django regular admin panel
  
 ## Development 

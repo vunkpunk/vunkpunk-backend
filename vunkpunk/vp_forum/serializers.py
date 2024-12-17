@@ -2,11 +2,21 @@ from django.urls import reverse
 from images_manager.models import SaleCardImage
 from images_manager.serializers import SaleCardImageSerializer
 from rest_framework import serializers
-from vp_forum.models import SaleCard
+from vp_forum.models import Category, SaleCard
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
 
 
 class SaleCardSerializer(serializers.ModelSerializer):
     comments_link = serializers.SerializerMethodField("get_comments_link")
+    categories = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), many=True, required=False, write_only=True
+    )
+    categories_names = CategorySerializer(source="categories", many=True, read_only=True)
     images = serializers.ListField(
         child=serializers.ImageField(max_length=100, allow_empty_file=False, use_url=False),
         write_only=True,
@@ -22,7 +32,9 @@ class SaleCardSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         images_data = validated_data.pop("images", [])  # Извлекаем изображения
+        categories = validated_data.pop("categories", [])
         post = SaleCard.objects.create(**validated_data)  # Создаём пост
+        post.categories.set(categories)
         if not images_data:
             SaleCardImage.objects.create(
                 salecard=post, photo="images_manager/image_folder/default/salecard_default.jpg"
@@ -41,9 +53,13 @@ class SaleCardSerializer(serializers.ModelSerializer):
         instance.is_published = validated_data.get("is_published", instance.is_published)
         instance.save()
 
+        categories = validated_data.pop("categories", None)
+
+        if categories is not None:
+            instance.categories.set(categories)
+
         # Удаляем старые фотографии, если они переданы
         images_to_delete = validated_data.get("images_to_delete", [])
-        print(images_to_delete)
         if images_to_delete:
             for image_id in images_to_delete:
                 try:
