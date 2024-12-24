@@ -15,25 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-import vp_forum
 from django.contrib import admin
 from django.urls import include, path, re_path
-from rest_framework import routers
 from vp_comments.views import CommentsListView
 from vp_forum import views
 from vp_forum.views import CategoryView
-from vp_users.views import ActivateAccountView, CustomTokenCreateView, UserRetrieveUpdateDestroyView
+from vp_users import views as v
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
     path(r"api/sales/", views.SaleCardsListCreateView.as_view(), name="salecards_list"),
     path(r"api/sales/<int:pk>/", views.SaleCardRetrieveUpdateDestroy.as_view()),
-    path(r"api/user/<int:pk>/", UserRetrieveUpdateDestroyView.as_view(), name="user"),
+    path(r"api/user/<int:pk>/", v.UserRetrieveUpdateDestroyView.as_view(), name="user"),
     path(r"api/comments/<int:post_id>/", CommentsListView.as_view(), name="comments_list"),
     path(r"api/categories/", CategoryView.as_view(), name="categories"),
     path(r"api/image/", include("images_manager.urls")),
-    path(r"api/auth/token/login/", CustomTokenCreateView.as_view()),
+    path(r"api/auth/token/login/", v.CustomTokenCreateView.as_view()),
     re_path(r"api/auth/", include("djoser.urls")),
     re_path(r"api/auth/", include("djoser.urls.authtoken")),
-    path(r"api/auth/activate/", ActivateAccountView.as_view(), name="activate"),
+    path(r"api/auth/activate/", v.ActivateAccountView.as_view(), name="activate"),
 ]
