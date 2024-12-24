@@ -10,14 +10,17 @@ class SaleCardsListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
+        result = SaleCard.published.all()
         if self.request.GET:
+            if self.request.GET.get("all", "false") == "true":
+                result = SaleCard.objects.all()
             user_id = self.request.GET.get("user_id")
             if user_id:
-                return SaleCard.published.all().filter(user_id=user_id)
+                result = result.filter(user_id=user_id)
             search = self.request.GET.get("search")
             if search:
-                return SaleCard.published.all().filter(title__icontains=search)
-        return SaleCard.published.all()
+                result = result.filter(title__icontains=search)
+        return result
 
     def perform_create(self, serializer):  # TODO: фегово работает редирект после создания поста
         serializer.save(user_id=self.request.user.id, rating=5.0)

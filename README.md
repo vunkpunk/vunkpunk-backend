@@ -27,7 +27,8 @@ To get this token user should be registered, and then get it by requesting. Here
 
 (These are routes from server url)
 1. **api/sales/**
-   1. **GET** - prints all posts (**permissions**: Everyone)
+   1. **GET** - prints all posts (**permissions**: Everyone)\
+      (**args:** all=(true/false), user_id=(id of user), search=(substring))
    2. **POST** - creates new post (**fields**: **title**, **price**, **description**, **is_published**) (**permissions**: Authenticated)
 2. **api/sales/<int: post_id>**
    1. **GET** - print single post (**permissions**: Authenticated)
