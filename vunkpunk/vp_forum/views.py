@@ -12,8 +12,11 @@ class SaleCardsListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         result = SaleCard.published.all()
         if self.request.GET:
-            if self.request.GET.get("all", "false") == "true":
+            status = self.request.GET.get("all")
+            if status == "true":
                 result = SaleCard.objects.all()
+            elif status == "false":
+                result = SaleCard.objects.filter(is_published=False)
             user_id = self.request.GET.get("user_id")
             if user_id:
                 result = result.filter(user_id=user_id)
