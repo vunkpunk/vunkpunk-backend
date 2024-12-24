@@ -24,6 +24,9 @@ pyyaml = "^6.0.1"
 django-stubs="^5.1.0"
 djangorestframework-stubs="^3.15.1"
 
+[tool.mypy]
+ignore_missing_imports = true
+
 [tool.black]
 line-length = 120
 
@@ -43,7 +46,7 @@ line-ending = "auto"
 
 [tool.ruff.lint]
 select = ["A", "E", "F", "PL", "RUF", "SIM", "UP", "W"]
-ignore = ["PLR0913", "RUF001", "F401", "RUF012"]
+ignore = ["PLR0913", "RUF001", "F401", "RUF012", "PLR2004"]
 
 [build-system]
 requires = ["poetry-core"]

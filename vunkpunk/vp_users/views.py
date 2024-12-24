@@ -4,8 +4,8 @@ import requests
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.timezone import now
+from djoser.views import TokenCreateView
 from rest_framework import generics, permissions, status
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from vp_users.models import User
@@ -61,3 +61,23 @@ class ActivateAccountView(APIView):
         user.save()
 
         return Response({"detail": "Аккаунт успешно активирован!"}, status=status.HTTP_200_OK)
+
+
+class CustomTokenCreateView(TokenCreateView):
+    def post(self, request, *args, **kwargs):
+        # Делаем стандартную проверку логина через Djoser
+        response = super().post(request, *args, **kwargs)
+
+        # Если логин прошел успешно (статус 200),
+        # подгружаем user из сериализатора и добавляем нужные поля в ответ
+        if response.status_code == 200:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.user
+
+            # Дополняем данные, которые уже сформировал Djoser
+            response.data["id"] = user.id
+            # Можно также добавить другие поля, например username, email и т.п.
+            # response.data['email'] = user.email
+
+        return response

@@ -10,11 +10,11 @@ class SaleCardsListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
-        result = SaleCard.published.all()
+        result = SaleCard.objects.all()
         if self.request.GET:
-            status = self.request.GET.get("all")
+            status = self.request.GET.get("published")
             if status == "true":
-                result = SaleCard.objects.all()
+                result = SaleCard.published.all()
             elif status == "false":
                 result = SaleCard.objects.filter(is_published=False)
             user_id = self.request.GET.get("user_id")

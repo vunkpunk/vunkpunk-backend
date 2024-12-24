@@ -22,7 +22,7 @@ from rest_framework import routers
 from vp_comments.views import CommentsListView
 from vp_forum import views
 from vp_forum.views import CategoryView
-from vp_users.views import ActivateAccountView, UserRetrieveUpdateDestroyView
+from vp_users.views import ActivateAccountView, CustomTokenCreateView, UserRetrieveUpdateDestroyView
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
@@ -32,7 +32,8 @@ urlpatterns = [
     path(r"api/comments/<int:post_id>/", CommentsListView.as_view(), name="comments_list"),
     path(r"api/categories/", CategoryView.as_view(), name="categories"),
     path(r"api/image/", include("images_manager.urls")),
-    path(r"api/auth/", include("djoser.urls")),
+    path(r"api/auth/token/login/", CustomTokenCreateView.as_view()),
+    re_path(r"api/auth/", include("djoser.urls")),
     re_path(r"api/auth/", include("djoser.urls.authtoken")),
     path(r"api/auth/activate/", ActivateAccountView.as_view(), name="activate"),
 ]
