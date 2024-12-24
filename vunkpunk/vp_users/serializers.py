@@ -48,7 +48,30 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        extra_kwargs: dict = {
+            "username": {
+                "validators": [],
+            },
+        }
         fields = ("username", "email", "password")
+
+    def validate(self, attrs):
+        """
+        Переопределяем валидацию, чтобы удалять неактивных пользователей до проверки.
+        """
+        username = attrs.get("username")
+        email = attrs.get("email")
+
+        existing_user = User.objects.filter(username=username, email=email, is_active=False).first()
+        if existing_user:
+            existing_user.delete()
+        elif User.objects.filter(username=username).exists():
+            raise serializers.ValidationError({"username": "Этот username уже занят."})
+        elif User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({"email": "Этот email уже занят."})
+
+        # Возвращаем данные для стандартной обработки
+        return super().validate(attrs)
 
     def create(self, validated_data):
         user = User.objects.create_user(

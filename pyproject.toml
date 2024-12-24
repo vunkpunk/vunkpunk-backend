@@ -43,7 +43,7 @@ line-ending = "auto"
 
 [tool.ruff.lint]
 select = ["A", "E", "F", "PL", "RUF", "SIM", "UP", "W"]
-ignore = ["PLR0913", "RUF001", "F401"]
+ignore = ["PLR0913", "RUF001", "F401", "RUF012"]
 
 [build-system]
 requires = ["poetry-core"]
