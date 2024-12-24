@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
         photo_name = instance.photo.name if instance.photo else None
 
         if photo_name:
-            url = reverse("salecard_image", args=(instance.pk,))
+            url = reverse("user_image", args=(instance.pk,))
             full_url = request.build_absolute_uri(url)
             representation["photo"] = full_url
         else:
