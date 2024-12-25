@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
             "dormitory",
             "faculty",
             "description",
+            "contact",
             "photo",
             "user_salecards_link",
         )
