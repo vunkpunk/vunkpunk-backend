@@ -9,6 +9,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from vp_users.models import User
+from vp_users.permissions import IsConcreteUser
 from vp_users.serializers import UserSerializer
 
 
@@ -19,7 +20,7 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return (permissions.IsAuthenticated(),)
-        return (permissions.IsAdminUser(),)
+        return (IsConcreteUser(),)
 
 
 class ActivateAccountView(APIView):
